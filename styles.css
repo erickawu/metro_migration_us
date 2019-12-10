@@ -1,3 +1,40 @@
+@font-face {
+  font-family: 'Apercu Regular';
+  src: url('fonts/Apercu-Regular.otf');
+}
+@font-face {
+  font-family: 'Apercu Light';
+  src: url('fonts/Apercu-Light.otf');
+}
+@font-face {
+  font-family: 'Moderat Regular';
+  src: url('fonts/Moderat-Regular.woff');
+}
+:root {
+  --main-background: rgb(248, 245, 243);
+  --main-green: #4FDCD2;
+  --main-red: rgb(255, 51, 53);
+  --main-brown: rgb(222, 210, 192);
+}
+body {
+  font-family: 'Apercu Regular';
+  letter-spacing: 0.5px;
+  background-color: var(--main-background);
+  margin: 0;
+  font-size: 16px;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+a:hover {
+  font-weight: 800;
+  color: var(--main-red);
+}
+h3 {
+  font-family: Moderat Regular;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -80,37 +117,6 @@ nav {
 
 .intro__dek {
   color: #8a8a8a;
-}
-
-.github-corner:hover .octo-arm {
-  animation: octocat-wave 560ms ease-in-out;
-}
-
-@keyframes octocat-wave {
-  0%,
-  100% {
-    transform: rotate(0);
-  }
-
-  20%,
-  60% {
-    transform: rotate(-25deg);
-  }
-
-  40%,
-  80% {
-    transform: rotate(10deg);
-  }
-}
-
-@media (max-width: 500px) {
-  .github-corner:hover .octo-arm {
-    animation: none;
-  }
-
-  .github-corner .octo-arm {
-    animation: octocat-wave 560ms ease-in-out;
-  }
 }
 
 #intro {
