@@ -111,8 +111,9 @@ figure p {
 
 
 .step {
-  margin: 0 auto 2rem auto;
+  margin: 0 0 2rem 2rem;
   background-color: #3b3b3b;
+  min-height: 550px;
   color: #fff;
 }
 
