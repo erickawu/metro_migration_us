@@ -16,7 +16,7 @@ var tooltip = d3.select("body").append("div")
   .style("visibility", "hidden");
 
 var y = d3.scaleLinear()
-    .domain([5,-4])
+    .domain([5,-4.2])
     .range([90, 440])
 
 var x = d3.scaleLinear()
@@ -25,11 +25,11 @@ var x = d3.scaleLinear()
 
 var yAxis = g => g
     .attr("transform", `translate(${80}, 0)`)
-    .call(d3.axisLeft(y));
+    .call(d3.axisLeft(y).tickSize(-700));
 
 var xAxis = g => g
     .attr("transform", `translate(0, ${440})`)
-    .call(d3.axisBottom(x));
+    .call(d3.axisBottom(x).tickSize(-360));
 
 function scatterplot() {
    var svg = d3.select(".sticky1").append("svg")
@@ -79,10 +79,16 @@ function scatterplot() {
       
   
   svg.append("g")
-      .call(xAxis);
+      .call(xAxis)
+        .call(g => g.select(".domain").remove())
+        .selectAll('.tick line')
+        .attr('stroke', '#eee'); 
 
   svg.append("g")
-      .call(yAxis);
+      .call(yAxis)
+        .call(g => g.select(".domain").remove())
+        .selectAll('.tick line')
+        .attr('stroke', '#eee'); 
   
   return svg.node();
 }   
