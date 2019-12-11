@@ -237,23 +237,24 @@ function map() {
                     })
                     .on("mousemove", function(d){
                         var curr_msa = d.properties.GEOID;
-                        for (var i in conns[curr_msa]) {
-                            var dest_msa = conns[curr_msa][i]["dest"];
-                            if (dest_msa in coords) {
-                                if (i == 0) {
-                                    d3.select('#dest_tt_1').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                                }
-                                if (i == 1) {
-                                    d3.select('#dest_tt_2').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                                }
-                                if (i == 2) {
-                                    d3.select('#dest_tt_3').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                                }
-                                if (i == 3) {
-                                    d3.select('#dest_tt_4').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                                }
-                            }
-                        }
+                        
+                        // for (var i in conns[curr_msa]) {
+                        //     var dest_msa = conns[curr_msa][i]["dest"];
+                        //     if (dest_msa in coords) {
+                        //         if (i == 0) {
+                        //             d3.select('#dest_tt_1').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
+                        //         }
+                        //         if (i == 1) {
+                        //             d3.select('#dest_tt_2').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
+                        //         }
+                        //         if (i == 2) {
+                        //             d3.select('#dest_tt_3').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
+                        //         }
+                        //         if (i == 3) {
+                        //             d3.select('#dest_tt_4').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
+                        //         }
+                        //     }
+                        // }
                         return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
                     })
                     .on("mouseout", function(d) {
