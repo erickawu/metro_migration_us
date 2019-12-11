@@ -15,7 +15,6 @@ body {
   font-size: 13px;
 }
 
-p,
 h1,
 h2,
 h3,
@@ -128,7 +127,10 @@ figure p {
 
 .step p {
   text-align: center;
-  padding: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+  padding-top: 0rem;
+  padding-bottom: 0rem;
 }
 
 .tooltip {	
