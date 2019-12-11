@@ -25,6 +25,10 @@ a {
   font-weight: 400;
 }
 
+h1 {
+   font-family: 'andale mono'; 
+}
+
 a,
 a:visited,
 a:hover {
@@ -34,25 +38,27 @@ a:hover {
 }
 
 #intro {
-  max-width: 40rem;
+  max-width: 50rem;
   margin: 1rem auto;
   text-align: center;
 }
 
 .intro__hed {
   font-size: 5em;
-  margin: 2rem auto 0.5rem auto;
+  margin: 2rem auto 1.2rem auto;
 }
 
 .intro__dek {
   font-size: 1em;
-  color: #8a8a8a;
+  margin: 0.5rem;
+  padding-bottom: 2rem;
 }
 
 .intro__text {
-  margin: 2rem;
+  padding-left: 9rem;
+  padding-right: 9rem;
+  margin: 1rem;
   font-size: 1em;
-  max-width: 40rem;
 }
 
 #scrolly {
@@ -61,7 +67,7 @@ a:hover {
   display: -ms-flexbox;
   display: flex;
   background-color: #f3f3f3;
-  padding: 1rem;
+  padding: 2rem;
 }
 
 #scrolly>* {
@@ -111,7 +117,7 @@ figure p {
 }
 
 .step:last-child {
-  margin-bottom: 0;
+  margin-bottom: 10rem;
 }
 
 .step.is-active {
