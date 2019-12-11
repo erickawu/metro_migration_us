@@ -11,7 +11,7 @@ body {
 body {
   font-family: 'courier';
   min-height: 1280px;
-  color: #3b3b3b;
+  color: #3a403b;
   font-size: 13px;
 }
 
@@ -25,6 +25,11 @@ a {
   font-weight: 400;
 }
 
+h1 {
+  color: #77815d;
+  font-family: 'andale mono'; 
+}
+
 a,
 a:visited,
 a:hover {
@@ -34,25 +39,27 @@ a:hover {
 }
 
 #intro {
-  max-width: 40rem;
+  max-width: 50rem;
   margin: 1rem auto;
   text-align: center;
 }
 
 .intro__hed {
   font-size: 5em;
-  margin: 2rem auto 0.5rem auto;
+  margin: 2rem auto 1.2rem auto;
 }
 
 .intro__dek {
   font-size: 1em;
-  color: #8a8a8a;
+  margin: 0.5rem;
+  padding-bottom: 1.8rem;
 }
 
 .intro__text {
-  margin: 2rem;
+  padding-left: 9rem;
+  padding-right: 9rem;
+  margin: 0.8rem;
   font-size: 1em;
-  max-width: 40rem;
 }
 
 #scrolly {
@@ -60,8 +67,8 @@ a:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background-color: #f3f3f3;
-  padding: 1rem;
+  background-color: #939e77;
+  padding: 2rem;
 }
 
 #scrolly>* {
@@ -74,18 +81,18 @@ a:hover {
 article {
   position: relative;
   padding: 0 1rem;
-  max-width: 30rem;
+  max-width: 25rem;
 }
 
 figure {
   position: -webkit-sticky;
   position: sticky;
-  width: 100%;
+  min-width: 850px;
   margin: 0;
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
-  background-color: #8a8a8a;
+  background-color: white;
   z-index: 0;
 }
 
@@ -111,7 +118,7 @@ figure p {
 }
 
 .step:last-child {
-  margin-bottom: 0;
+  margin-bottom: 10rem;
 }
 
 .step.is-active {
@@ -121,6 +128,5 @@ figure p {
 
 .step p {
   text-align: center;
-  padding: 1rem;
-  font-size: 1rem;
+  padding: 2rem;
 }
