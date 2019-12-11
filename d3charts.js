@@ -324,6 +324,17 @@ function outliers() {
                             return "white";
                         }
                     })
+                    .on("mouseover", function(d){
+                        if (data.hasOwnProperty(curr_msa)) {
+                            return tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net population change, 2013-2017: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
+                        }
+                    })
+                    .on("mousemove", function(d){
+                        return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                    })
+                    .on("mouseout", function(d) {
+                        return tooltip.style("visibility", "hidden");
+                    })
                     .style("stroke", function (d) {
                         return "white";
                     });
@@ -360,6 +371,17 @@ function retire() {
                         } else {
                             return "white";
                         }
+                    })
+                    .on("mouseover", function(d){
+                        if (data.hasOwnProperty(curr_msa)) {
+                            return tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net population change, 2013-2017: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
+                        }
+                    })
+                    .on("mousemove", function(d){
+                        return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                    })
+                    .on("mouseout", function(d) {
+                        return tooltip.style("visibility", "hidden");
                     })
                     // .on("mouseout", function(d) {
                     //     var curr_msa = d.properties.GEOID;
@@ -514,6 +536,17 @@ function texas() {
                         } else {
                             return "white";
                         }
+                    })
+                    .on("mouseover", function(d){
+                        if (data.hasOwnProperty(curr_msa)) {
+                            return tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net population change, 2013-2017: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
+                        }
+                    })
+                    .on("mousemove", function(d){
+                        return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                    })
+                    .on("mouseout", function(d) {
+                        return tooltip.style("visibility", "hidden");
                     })
                     // .on("mouseout", function(d) {
                     //     var curr_msa = d.properties.GEOID;
