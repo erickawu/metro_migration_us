@@ -11,9 +11,35 @@ const connections_url = "https://raw.githubusercontent.com/erickawu/scroll_narra
 var path = d3.geoPath(d3.geoEquirectangular());
 
 var tooltip = d3.select("body").append("div")
-  .attr("class", "tooltip")
+  .attr("class", "tooltip-src")
   .style("position", "absolute")
   .style("visibility", "hidden");
+
+var dest_tt_1 = d3.select("body").append("div")
+  .attr("class", "tooltip-dest")
+  .attr("id", "dest_tt_1")
+  .style("position", "absolute")
+  .style("visibility", "hidden");
+
+var dest_tt_2 = d3.select("body").append("div")
+  .attr("class", "tooltip-dest")
+  .attr("id", "dest_tt_2")
+  .style("position", "absolute")
+  .style("visibility", "hidden");
+
+var dest_tt_3 = d3.select("body").append("div")
+  .attr("class", "tooltip-dest")
+  .attr("id", "dest_tt_3")
+  .style("position", "absolute")
+  .style("visibility", "hidden");
+
+var dest_tt_4 = d3.select("body").append("div")
+  .attr("class", "tooltip-dest")
+  .attr("id", "dest_tt_4")
+  .style("position", "absolute")
+  .style("visibility", "hidden");
+
+var cans = {}
 
 var y = d3.scaleLinear()
     .domain([5,-4.2])
@@ -134,6 +160,10 @@ function map() {
                     .enter().append("path")
                     .attr("d", path)
                     .style("fill", function (d) {
+                        // populate all coordinates in cans dict
+                        var curr_msa = d.properties.GEOID;
+                        cans[curr_msa] = [this.getPointAtLength(this.getTotalLength()).x, this.getPointAtLength(this.getTotalLength()).y];
+                        
                         if (data.hasOwnProperty(d.properties.GEOID)) {
                             return "lightgray";
                         } else {
@@ -141,26 +171,48 @@ function map() {
                         }
                     })
                     .on("mouseover", function(d) {
-                        // failing attempt to draw lines from source to dests
-                        // for (var i in conns[d.properties.GEOID]) {
-                        //     if (conns[d.properties.GEOID][i]["dest"] in coords) {
-                        //         // draw line
-                        //         svg.append("line")
-                        //         .attr("x1", coords[d.properties.GEOID][0])
-                        //         .attr("y1", coords[d.properties.GEOID][1])
-                        //         .attr("x2", coords[conns[d.properties.GEOID][i]["dest"]][0])
-                        //         .attr("y2", coords[conns[d.properties.GEOID][i]["dest"]][1])
-                        //         .attr("stroke-width", 1)
-                        //         // .attr("stroke-width", parseInt(conns[d.properties.GEOID][i]["value"]))
-                        //         .attr("stroke", "black");
-                        //     }
-                        // }
+                        var curr_msa = d.properties.GEOID;
+                        // draw lines from source to dests
+                        for (var i in conns[curr_msa]) {
+                            var dest_msa = conns[curr_msa][i]["dest"];
+                            if (dest_msa in coords) {
+                                // draw line
+                                svg.append("line")
+                                .attr("x1", cans[curr_msa][0])
+                                .attr("y1", cans[curr_msa][1])
+                                .attr("x2", cans[dest_msa][0])
+                                .attr("y2", cans[dest_msa][1])
+                                .attr("stroke-width", Math.abs(parseInt(conns[dest_msa][i]["value"]))/5000)
+                                .attr("stroke", function() {
+                                    if (parseInt(conns[dest_msa][i]["value"]) < 0) {
+                                        return "red";
+                                    } else {
+                                        return "lightgreen";
+                                    }
+                                });
+                            }
+                        }
                         // blacken dests
                         d3.selectAll('path').style("fill", function (e) {
-                            for (var i in conns[d.properties.GEOID]) {
-                                if (conns[d.properties.GEOID][i]["dest"] in coords) {
-                                    if (e.properties.GEOID == conns[d.properties.GEOID][i]["dest"]) {
-                                        return "black";
+                            for (var i in conns[curr_msa]) {
+                                var dest_msa = conns[curr_msa][i]["dest"];
+                                if (dest_msa in coords) {
+                                    if (data.hasOwnProperty(dest_msa)) {
+                                        if (i == 0) {
+                                            d3.select('#dest_tt_1').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Net: " + data[dest_msa]["net"] + "<br> RPI: " + data[dest_msa]["rpi"]);
+                                        }
+                                        if (i == 1) {
+                                            d3.select('#dest_tt_2').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Net: " + data[dest_msa]["net"] + "<br> RPI: " + data[dest_msa]["rpi"]);
+                                        }
+                                        if (i == 2) {
+                                            d3.select('#dest_tt_3').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Net: " + data[dest_msa]["net"] + "<br> RPI: " + data[dest_msa]["rpi"]);
+                                        }
+                                        if (i == 3) {
+                                            d3.select('#dest_tt_4').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Net: " + data[dest_msa]["net"] + "<br> RPI: " + data[dest_msa]["rpi"]);
+                                        }
+                                    }
+                                    if (e.properties.GEOID == dest_msa) {
+                                        return "gray";
                                     }
                                 }
                             }
@@ -172,31 +224,50 @@ function map() {
                         });
                         // color curr msa by net
                         d3.select(this).style("fill", function (d) {
-                            if (data.hasOwnProperty(d.properties.GEOID) && data[d.properties.GEOID].hasOwnProperty("net")) {
-                                return d3.interpolatePiYG((data[d.properties.GEOID]["net"] + 149227) / 298454);
+                            if (data.hasOwnProperty(curr_msa) && data[curr_msa].hasOwnProperty("net")) {
+                                return d3.interpolatePiYG((data[curr_msa]["net"] + 149227) / 298454);
                             } else {
                                 return "white";
                             }
                         });
                         // show tooltip
-                        if (data.hasOwnProperty(d.properties.GEOID)) {
-                            return tooltip.style("visibility", "visible").html(data[d.properties.GEOID]["name"] + "<br> Net: " + data[d.properties.GEOID]["net"] + "<br> RPI: " + data[d.properties.GEOID]["rpi"]);
+                        if (data.hasOwnProperty(curr_msa)) {
+                            return tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
                         }
                     })
-                    .on("mousemove", function(){
+                    .on("mousemove", function(d){
+                        var curr_msa = d.properties.GEOID;
+                        for (var i in conns[curr_msa]) {
+                            var dest_msa = conns[curr_msa][i]["dest"];
+                            if (dest_msa in coords) {
+                                if (i == 0) {
+                                    d3.select('#dest_tt_1').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+10)+"px");
+                                }
+                                if (i == 1) {
+                                    d3.select('#dest_tt_2').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+10)+"px");
+                                }
+                                if (i == 2) {
+                                    d3.select('#dest_tt_3').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+10)+"px");
+                                }
+                                if (i == 3) {
+                                    d3.select('#dest_tt_4').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+10)+"px");
+                                }
+                            }
+                        }
                         return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
                     })
                     .on("mouseout", function(d) {
+                        var curr_msa = d.properties.GEOID;
                         d3.selectAll("line").remove();
                         d3.select(this).style("fill", function (d) {
-                            if (data.hasOwnProperty(d.properties.GEOID)) {
+                            if (data.hasOwnProperty(curr_msa)) {
                                 return "lightgray";
                             } else {
                                 return "white";
                             }
                         });
-                        for (var i in conns[d.properties.GEOID]) {
-                            if (conns[d.properties.GEOID][i]["dest"] in coords) {
+                        for (var i in conns[curr_msa]) {
+                            if (conns[curr_msa][i]["dest"] in coords) {
                                 // stroke around dests
                                 d3.selectAll('path').style("fill", function (e) {
                                     if (data.hasOwnProperty(e.properties.GEOID)) {
@@ -207,6 +278,10 @@ function map() {
                                 });
                             }
                         }
+                        d3.select('#dest_tt_1').style("visibility", "hidden");
+                        d3.select('#dest_tt_2').style("visibility", "hidden");
+                        d3.select('#dest_tt_3').style("visibility", "hidden");
+                        d3.select('#dest_tt_4').style("visibility", "hidden");
                         return tooltip.style("visibility", "hidden");
                     })
                     .style("stroke", function (d) {
