@@ -130,3 +130,17 @@ figure p {
   text-align: center;
   padding: 2rem;
 }
+
+.tooltip {	
+  position: absolute;			
+  text-align: left;			
+  width: auto;					
+  height: auto;					
+  padding: 5px;
+  color: black;				
+  font: 10px 'courier';		
+  background: white;	
+  border: 1px solid black;
+  border-radius: 3px;			
+  pointer-events: none;			
+}
