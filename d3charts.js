@@ -184,7 +184,7 @@ function map() {
                                 .attr("y2", cans[dest_msa][1])
                                 .attr("stroke-width", Math.abs(parseInt(conns[dest_msa][i]["value"]))/5000)
                                 .attr("stroke", function() {
-                                    if (parseInt(conns[dest_msa][i]["value"]) < 0) {
+                                    if (parseInt(conns[curr_msa][i]["value"]) < 0) {
                                         return "red";
                                     } else {
                                         return "lightgreen";
@@ -199,16 +199,16 @@ function map() {
                                 if (dest_msa in coords) {
                                     if (data.hasOwnProperty(dest_msa)) {
                                         if (i == 0) {
-                                            d3.select('#dest_tt_1').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Net: " + data[dest_msa]["net"] + "<br> RPI: " + data[dest_msa]["rpi"]);
+                                            d3.select('#dest_tt_1').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
                                         }
                                         if (i == 1) {
-                                            d3.select('#dest_tt_2').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Net: " + data[dest_msa]["net"] + "<br> RPI: " + data[dest_msa]["rpi"]);
+                                            d3.select('#dest_tt_2').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
                                         }
                                         if (i == 2) {
-                                            d3.select('#dest_tt_3').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Net: " + data[dest_msa]["net"] + "<br> RPI: " + data[dest_msa]["rpi"]);
+                                            d3.select('#dest_tt_3').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
                                         }
                                         if (i == 3) {
-                                            d3.select('#dest_tt_4').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Net: " + data[dest_msa]["net"] + "<br> RPI: " + data[dest_msa]["rpi"]);
+                                            d3.select('#dest_tt_4').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
                                         }
                                     }
                                     if (e.properties.GEOID == dest_msa) {
@@ -232,7 +232,7 @@ function map() {
                         });
                         // show tooltip
                         if (data.hasOwnProperty(curr_msa)) {
-                            return tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
+                            return tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net population change, 2013-2017: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
                         }
                     })
                     .on("mousemove", function(d){
@@ -241,16 +241,16 @@ function map() {
                             var dest_msa = conns[curr_msa][i]["dest"];
                             if (dest_msa in coords) {
                                 if (i == 0) {
-                                    d3.select('#dest_tt_1').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+10)+"px");
+                                    d3.select('#dest_tt_1').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
                                 }
                                 if (i == 1) {
-                                    d3.select('#dest_tt_2').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+10)+"px");
+                                    d3.select('#dest_tt_2').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
                                 }
                                 if (i == 2) {
-                                    d3.select('#dest_tt_3').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+10)+"px");
+                                    d3.select('#dest_tt_3').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
                                 }
                                 if (i == 3) {
-                                    d3.select('#dest_tt_4').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+10)+"px");
+                                    d3.select('#dest_tt_4').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
                                 }
                             }
                         }
