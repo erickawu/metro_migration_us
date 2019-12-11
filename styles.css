@@ -51,13 +51,13 @@ a:hover {
 .intro__dek {
   font-size: 1em;
   margin: 0.5rem;
-  padding-bottom: 2rem;
+  padding-bottom: 1.8rem;
 }
 
 .intro__text {
   padding-left: 9rem;
   padding-right: 9rem;
-  margin: 1rem;
+  margin: 0.8rem;
   font-size: 1em;
 }
 
