@@ -95,6 +95,13 @@ function handleStepEnter(response) {
     console.log(response)
     // response = { element, direction, index }
 
+    if (response.direction == 'up' && response.index == 0){
+		d3.select('.sticky1 svg').remove();
+	}
+    if (response.direction == 'down' && response.index == 1){
+		map();
+	}
+
     // add color to current step only
     step.classed('is-active', function (d, i) {
         return i === response.index;
@@ -129,8 +136,6 @@ function init() {
 
     // setup resize event
     window.addEventListener('resize', handleResize);
-
-    map();
 }
 
 // kick things off
