@@ -87,9 +87,31 @@ function scatterplot() {
   svg.append("g")
       .call(yAxis)
         .call(g => g.select(".domain").remove())
-        .selectAll('.tick line')
-        .attr('stroke', '#eee'); 
-  
+        .selectAll('.tick')
+            .selectAll('line')
+            .attr('stroke', '#eee');
+    
+
+    svg.append("text")
+      .attr("class", "text")
+      .attr("transform", "translate(370," + 470 + ")")
+      .style("text-anchor", "left")
+      .style("font-size", "10px")
+      .text("Real Personal Income ($)");
+
+  svg.append("text")
+      .attr("class", "text")
+      .attr("transform", "translate(" + (55) + "," + (250) + ")rotate(-90)")
+      .style("text-anchor", "middle")
+      .style("font-size", "10px")
+      .text("Ratio of Net Migrants over Population");
+  //title
+  svg.append("text")
+      .attr("class", "text")
+      .attr("transform", "translate(150," + 40 + ")")
+      .style("text-anchor", "left")
+      .style("font-size", "18px")
+      .text("Relationship Between Net Migration Ratio and RPI")
   return svg.node();
 }   
 
