@@ -6,7 +6,7 @@ const connections_url = "https://raw.githubusercontent.com/erickawu/scroll_narra
 var path = d3.geoPath(d3.geoEquirectangular());
 
 var tooltip = d3.select("body").append("div")
-  .attr("class", "tooltip") // need to write html to style this box
+  .attr("class", "tooltip")
   .style("position", "absolute")
   .style("visibility", "hidden");
 
@@ -75,7 +75,7 @@ function map() {
                         });
                         // show tooltip
                         if (data.hasOwnProperty(d.properties.GEOID)) {
-                            return tooltip.style("visibility", "visible").text(data[d.properties.GEOID]["name"] + "\n" + data[d.properties.GEOID]["net"]);
+                            return tooltip.style("visibility", "visible").html(data[d.properties.GEOID]["name"] + "<br> Net: " + data[d.properties.GEOID]["net"] + "<br> RPI: " + data[d.properties.GEOID]["rpi"]);
                         }
                     })
                     .on("mousemove", function(){
