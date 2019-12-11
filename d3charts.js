@@ -26,9 +26,9 @@ function map() {
             .attr("d", path)
             .style("fill", function (d) {
                 if (msa_data.hasOwnProperty(d.properties.GEOID)) {
-                    return "white";
+                    return "lightgray";
                 } else {
-                    return "gray";
+                    return "white";
                 }
             })
             .on("mouseover", function(d) {
@@ -36,7 +36,7 @@ function map() {
                     if (msa_data.hasOwnProperty(d.properties.GEOID) && msa_data[d.properties.GEOID].hasOwnProperty("net")) {
                         return d3.interpolatePiYG((msa_data[d.properties.GEOID]["net"] + 149227) / 298454);
                     } else {
-                        return "gray";
+                        return "white";
                     }
                 });
                 if (msa_data.hasOwnProperty(d.properties.GEOID)) {
@@ -48,20 +48,16 @@ function map() {
             })
             .on("mouseout", function(d) {
                 d3.select(this).style("fill", function (d) {
-                    if (msa_data.hasOwnProperty(d.properties.GEOID) && msa_data[d.properties.GEOID].hasOwnProperty("net")) {
-                        return "white";
+                    if (msa_data.hasOwnProperty(d.properties.GEOID)) {
+                        return "lightgray";
                     } else {
-                        return "gray";
+                        return "white";
                     }
                 });
                 return tooltip.style("visibility", "hidden");
             })
             .style("stroke", function (d) {
-                if (msa_data.hasOwnProperty(d.properties.GEOID)) {
-                    return "lightgray";
-                } else {
-                    return "gray";
-                }
+                return "white";
             });
         });
     });
