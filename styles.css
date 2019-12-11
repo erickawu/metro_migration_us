@@ -11,7 +11,7 @@ body {
 body {
   font-family: 'courier';
   min-height: 1280px;
-  color: #3b3b3b;
+  color: #3a403b;
   font-size: 13px;
 }
 
@@ -26,7 +26,8 @@ a {
 }
 
 h1 {
-   font-family: 'andale mono'; 
+  color: #77815d;
+  font-family: 'andale mono'; 
 }
 
 a,
@@ -66,7 +67,7 @@ a:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background-color: #f3f3f3;
+  background-color: #939e77;
   padding: 2rem;
 }
 
@@ -91,7 +92,7 @@ figure {
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
-  background-color: #8a8a8a;
+  background-color: white;
   z-index: 0;
 }
 
@@ -127,6 +128,5 @@ figure p {
 
 .step p {
   text-align: center;
-  padding: 1rem;
-  font-size: 1rem;
+  padding: 2rem;
 }
