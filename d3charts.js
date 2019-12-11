@@ -11,10 +11,9 @@ var scroller = scrollama();
 // generic window resize listener event
 function handleResize() {
     // 1. update height of step elements
-    var stepH = Math.floor(window.innerHeight * 0.85);
-    step.style('height', stepH + 'px');
+    step.style('height', 550 + 'px');
 
-    var figureHeight = 0.75*window.innerHeight
+    var figureHeight = 500
     var figureMarginTop = (window.innerHeight - figureHeight) / 2
 
     figure

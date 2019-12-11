@@ -80,13 +80,13 @@ a:hover {
 article {
   position: relative;
   padding: 0 1rem;
-  max-width: 30rem;
+  max-width: 25rem;
 }
 
 figure {
   position: -webkit-sticky;
   position: sticky;
-  width: 100%;
+  min-width: 850px;
   margin: 0;
   -webkit-transform: translate3d(0, 0, 0);
   -moz-transform: translate3d(0, 0, 0);
