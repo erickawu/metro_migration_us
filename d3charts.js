@@ -325,6 +325,7 @@ function outliers() {
                         }
                     })
                     .on("mouseover", function(d){
+                        var curr_msa = d.properties.GEOID;
                         if (data.hasOwnProperty(curr_msa)) {
                             return tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net population change, 2013-2017: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
                         }
