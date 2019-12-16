@@ -7,7 +7,6 @@ const dict = ["11640", "41980", "10380", "25020", "41900", "32420", "38660", "24
 const coords_url = "https://raw.githubusercontent.com/erickawu/scroll_narrative/master/msa_coords.json";
 const connections_url = "https://raw.githubusercontent.com/erickawu/scroll_narrative/master/msa_connections.json";
 
-
 var path = d3.geoPath(d3.geoEquirectangular());
 
 var cans = {}
@@ -29,6 +28,11 @@ var xAxis = g => g
     .call(d3.axisBottom(x).tickSize(-360));
 
 function scatterplot() {
+    var tooltip = d3.select("body").append("div")
+        .attr("class", "tooltip-src")
+        .style("position", "absolute")
+        .style("visibility", "hidden");
+
    var svg = d3.select(".sticky1").append("svg")
         .attr("width", 850)
         .attr("height", 500);
