@@ -459,6 +459,55 @@ function texas() {
     });
 }
 
+function puerto() {
+    var outliers = {"35620": 0};
+
+    const path = d3.geoPath(d3.geoAlbersUsa());
+
+    var svg = d3.select(".sticky1").append("svg")
+        .attr("width", 900)
+        .attr("height", 500);
+
+    let g = svg.append("g");
+
+    d3.json(map_url).then(function(map) {
+        d3.json(data_url).then(function(data) {
+            d3.json(coords_url).then(function(coords) {
+                d3.json(connections_url).then(function(conns) {
+                    // Bind metro paths
+                    g.selectAll("path")
+                    .data(topojson.feature(map, map.objects.cb_2014_us_cbsa_500k).features)
+                    .enter().append("path")
+                    .attr("d", path)
+                    .style("fill", function (d) {
+                        if (outliers.hasOwnProperty(d.properties.GEOID)) {
+                            return "black";
+                            // return d3.interpolatePiYG((data[texas_msa]["net"] + 149227) / 298454);
+                        } else if (data.hasOwnProperty(d.properties.GEOID)) {
+                            return "lightgray";
+                        } else {
+                            return "white";
+                        }
+                    })
+                    .on("mouseover", function(d){
+                        if (data.hasOwnProperty(curr_msa)) {
+                            return tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net population change, 2013-2017: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
+                        }
+                    })
+                    .on("mousemove", function(d){
+                        return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                    })
+                    .on("mouseout", function(d) {
+                        return tooltip.style("visibility", "hidden");
+                    })
+                    .style("stroke", function (d) {
+                        return "white";
+                    });
+                });
+            });
+        });
+    });
+}
 // using d3 for convenience
 var main = d3.select('main')
 var scrolly = main.select('#scrolly');
@@ -513,7 +562,10 @@ function handleStepEnter(response) {
         d3.select('.sticky1 svg').remove();
         texas();
     }
-
+    if (response.index == 5) {
+        d3.select('.sticky1 svg').remove();
+        puerto();
+    }
     // add color to current step only
     step.classed('is-active', function (d, i) {
         return i === response.index;
