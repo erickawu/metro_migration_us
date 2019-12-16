@@ -10,35 +10,6 @@ const connections_url = "https://raw.githubusercontent.com/erickawu/scroll_narra
 
 var path = d3.geoPath(d3.geoEquirectangular());
 
-var tooltip = d3.select("body").append("div")
-  .attr("class", "tooltip-src")
-  .style("position", "absolute")
-  .style("visibility", "hidden");
-
-var dest_tt_1 = d3.select("body").append("div")
-  .attr("class", "tooltip-dest")
-  .attr("id", "dest_tt_1")
-  .style("position", "absolute")
-  .style("visibility", "hidden");
-
-var dest_tt_2 = d3.select("body").append("div")
-  .attr("class", "tooltip-dest")
-  .attr("id", "dest_tt_2")
-  .style("position", "absolute")
-  .style("visibility", "hidden");
-
-var dest_tt_3 = d3.select("body").append("div")
-  .attr("class", "tooltip-dest")
-  .attr("id", "dest_tt_3")
-  .style("position", "absolute")
-  .style("visibility", "hidden");
-
-var dest_tt_4 = d3.select("body").append("div")
-  .attr("class", "tooltip-dest")
-  .attr("id", "dest_tt_4")
-  .style("position", "absolute")
-  .style("visibility", "hidden");
-
 var cans = {}
 
 var y = d3.scaleLinear()
@@ -103,7 +74,6 @@ function scatterplot() {
           }))
       });
       
-  
   svg.append("g")
       .call(xAxis)
         .call(g => g.select(".domain").remove())
@@ -117,7 +87,6 @@ function scatterplot() {
             .selectAll('line')
             .attr('stroke', '#eee');
     
-
     svg.append("text")
       .attr("class", "text")
       .attr("transform", "translate(370," + 470 + ")")
@@ -172,90 +141,79 @@ function map() {
                     })
                     .on("mouseover", function(d) {
                         var curr_msa = d.properties.GEOID;
-                        // draw lines from source to dests
-                        for (var i in conns[curr_msa]) {
-                            var dest_msa = conns[curr_msa][i]["dest"];
-                            if (dest_msa in coords) {
-                                // draw line
-                                svg.append("line")
-                                .attr("x1", cans[curr_msa][0])
-                                .attr("y1", cans[curr_msa][1])
-                                .attr("x2", cans[dest_msa][0])
-                                .attr("y2", cans[dest_msa][1])
-                                .attr("stroke-width", Math.abs(parseInt(conns[dest_msa][i]["value"]))/5000)
-                                .attr("stroke", function() {
-                                    if (parseInt(conns[curr_msa][i]["value"]) < 0) {
-                                        return "red";
-                                    } else {
-                                        return "lightgreen";
-                                    }
-                                });
+                        
+                        if (curr_msa in data) {
+                            d3.select('#legend').text("");
+                            var curr_txt = '<p>' + data[curr_msa]["name"] + '</p>';
+                            curr_txt += '<p> Net pop. change, 2013-17: ';
+                            if (data[curr_msa]["net"] > 0) {
+                                curr_txt += '+';
                             }
-                        }
-                        // blacken dests
-                        d3.selectAll('path').style("fill", function (e) {
+                            curr_txt += data[curr_msa]["net"] + '</p>';
+                            curr_txt += '<p> RPI: ' + data[curr_msa]["rpi"] + '<p>';
+
+                            d3.select('#slcted').html(curr_txt); // css needed
+                            // draw lines from source to dests
                             for (var i in conns[curr_msa]) {
                                 var dest_msa = conns[curr_msa][i]["dest"];
                                 if (dest_msa in coords) {
-                                    if (data.hasOwnProperty(dest_msa)) {
-                                        if (i == 0) {
-                                            d3.select('#dest_tt_1').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
+                                    // draw line
+                                    svg.append("line")
+                                    .attr("x1", cans[curr_msa][0])
+                                    .attr("y1", cans[curr_msa][1])
+                                    .attr("x2", cans[dest_msa][0])
+                                    .attr("y2", cans[dest_msa][1])
+                                    .attr("stroke-width", Math.abs(parseInt(conns[dest_msa][i]["value"]))/5000)
+                                    .attr("stroke", function() {
+                                        if (parseInt(conns[curr_msa][i]["value"]) < 0) {
+                                            return "red";
+                                        } else {
+                                            return "lightgreen";
                                         }
-                                        if (i == 1) {
-                                            d3.select('#dest_tt_2').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
-                                        }
-                                        if (i == 2) {
-                                            d3.select('#dest_tt_3').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
-                                        }
-                                        if (i == 3) {
-                                            d3.select('#dest_tt_4').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
-                                        }
+                                    });
+                                    
+                                    var dst_txt = '<p>';
+                                    if (conns[curr_msa][i]["value"] > 0) {
+                                        dst_txt += '+';
                                     }
-                                    if (e.properties.GEOID == dest_msa) {
-                                        return "gray";
+                                    dst_txt += conns[curr_msa][i]["value"] + ': ';
+
+                                    if (dest_msa in data) {
+                                        dst_txt += data[dest_msa]["name"] + ', RPI ' + data[dest_msa]["rpi"];
+                                    } else {
+                                        dst_txt += 'Unknown Metro Area';
                                     }
+                                    dst_txt += '</p>';
+                                    d3.select('#dst'+i).html(dst_txt); // css needed   
+                            
                                 }
                             }
-                            if (data.hasOwnProperty(e.properties.GEOID)) {
-                                return "lightgray";
-                            } else {
-                                return "white";
-                            }
-                        });
-                        // color curr msa by net
-                        d3.select(this).style("fill", function (d) {
-                            if (data.hasOwnProperty(curr_msa) && data[curr_msa].hasOwnProperty("net")) {
-                                return d3.interpolatePiYG((data[curr_msa]["net"] + 149227) / 298454);
-                            } else {
-                                return "white";
-                            }
-                        });
-                        // show tooltip
-                        if (data.hasOwnProperty(curr_msa)) {
-                            return tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net population change, 2013-2017: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
-                        }
-                    })
-                    .on("mousemove", function(d){
-                        var curr_msa = d.properties.GEOID;
                         
-                        // for (var i in conns[curr_msa]) {
-                        //     var dest_msa = conns[curr_msa][i]["dest"];
-                        //     if (dest_msa in coords) {
-                        //         if (i == 0) {
-                        //             d3.select('#dest_tt_1').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                        //         }
-                        //         if (i == 1) {
-                        //             d3.select('#dest_tt_2').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                        //         }
-                        //         if (i == 2) {
-                        //             d3.select('#dest_tt_3').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                        //         }
-                        //         if (i == 3) {
-                        //             d3.select('#dest_tt_4').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                        //         }
-                        //     }
-                        // }
-                        return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
+                            // gray dests
+                            d3.selectAll('path').style("fill", function (e) {
+                                for (var i in conns[curr_msa]) {
+                                    var dest_msa = conns[curr_msa][i]["dest"];
+                                    if (dest_msa in coords) {
+                                        if (e.properties.GEOID == dest_msa) {
+                                            return "gray";
+                                        }
+                                    }
+                                }
+                                if (data.hasOwnProperty(e.properties.GEOID)) {
+                                    return "lightgray";
+                                } else {
+                                    return "white";
+                                }
+                            });
+                            // color curr msa by net
+                            d3.select(this).style("fill", function (d) {
+                                if (data.hasOwnProperty(curr_msa) && data[curr_msa].hasOwnProperty("net")) {
+                                    return d3.interpolatePiYG((data[curr_msa]["net"] + 149227) / 298454);
+                                } else {
+                                    return "white";
+                                }
+                            });
+                        }
                     })
                     .on("mouseout", function(d) {
                         var curr_msa = d.properties.GEOID;
@@ -279,11 +237,10 @@ function map() {
                                 });
                             }
                         }
-                        d3.select('#dest_tt_1').style("visibility", "hidden");
-                        d3.select('#dest_tt_2').style("visibility", "hidden");
-                        d3.select('#dest_tt_3').style("visibility", "hidden");
-                        d3.select('#dest_tt_4').style("visibility", "hidden");
-                        return tooltip.style("visibility", "hidden");
+
+                        d3.select("#slcted").html("");
+                        d3.selectAll(".dst").html("");
+                        d3.select('#legend').html("<b> Mouse over </b> any metropolitan area to view <b> inflow and outflow data </b> (Only the magnitudes of the top four flows are displayed).");
                     })
                     .style("stroke", function (d) {
                         return "white";
@@ -324,18 +281,6 @@ function outliers() {
                             return "white";
                         }
                     })
-                    .on("mouseover", function(d){
-                        var curr_msa = d.properties.GEOID;
-                        if (data.hasOwnProperty(curr_msa)) {
-                            return tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net population change, 2013-2017: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
-                        }
-                    })
-                    .on("mousemove", function(d){
-                        return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
-                    })
-                    .on("mouseout", function(d) {
-                        return tooltip.style("visibility", "hidden");
-                    })
                     .style("stroke", function (d) {
                         return "white";
                     });
@@ -373,45 +318,6 @@ function retire() {
                             return "white";
                         }
                     })
-                    .on("mouseover", function(d){
-                        if (data.hasOwnProperty(curr_msa)) {
-                            return tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net population change, 2013-2017: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
-                        }
-                    })
-                    .on("mousemove", function(d){
-                        return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
-                    })
-                    .on("mouseout", function(d) {
-                        return tooltip.style("visibility", "hidden");
-                    })
-                    // .on("mouseout", function(d) {
-                    //     var curr_msa = d.properties.GEOID;
-                    //     d3.selectAll("line").remove();
-                    //     d3.select(this).style("fill", function (d) {
-                    //         if (data.hasOwnProperty(curr_msa)) {
-                    //             return "lightgray";
-                    //         } else {
-                    //             return "white";
-                    //         }
-                    //     });
-                    //     for (var i in conns[curr_msa]) {
-                    //         if (conns[curr_msa][i]["dest"] in coords) {
-                    //             // stroke around dests
-                    //             d3.selectAll('path').style("fill", function (e) {
-                    //                 if (data.hasOwnProperty(e.properties.GEOID)) {
-                    //                     return "lightgray";
-                    //                 } else {
-                    //                     return "white";
-                    //                 }
-                    //             });
-                    //         }
-                    //     }
-                    //     d3.select('#dest_tt_1').style("visibility", "hidden");
-                    //     d3.select('#dest_tt_2').style("visibility", "hidden");
-                    //     d3.select('#dest_tt_3').style("visibility", "hidden");
-                    //     d3.select('#dest_tt_4').style("visibility", "hidden");
-                    //     return tooltip.style("visibility", "hidden");
-                    // })
                     .style("stroke", function (d) {
                         return "white";
                     });
@@ -453,20 +359,6 @@ function retire() {
                             for (var i in conns[curr_msa]) {
                                 var dest_msa = conns[curr_msa][i]["dest"];
                                 if (dest_msa in coords) {
-                                    // if (data.hasOwnProperty(dest_msa)) {
-                                    //     if (i == 0) {
-                                    //         d3.select('#dest_tt_1').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
-                                    //     }
-                                    //     if (i == 1) {
-                                    //         d3.select('#dest_tt_2').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
-                                    //     }
-                                    //     if (i == 2) {
-                                    //         d3.select('#dest_tt_3').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
-                                    //     }
-                                    //     if (i == 3) {
-                                    //         d3.select('#dest_tt_4').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
-                                    //     }
-                                    // }
                                     if (e.properties.GEOID == dest_msa) {
                                         return "gray";
                                     }
@@ -479,29 +371,6 @@ function retire() {
                             return "white";
                         }
                     });
-                    
-                    // show tooltip
-                    // tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net population change, 2013-2017: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
-                    
-
-                    // for (var i in conns[curr_msa]) {
-                    //     var dest_msa = conns[curr_msa][i]["dest"];
-                    //     if (dest_msa in coords) {
-                    //         if (i == 0) {
-                    //             d3.select('#dest_tt_1').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                    //         }
-                    //         if (i == 1) {
-                    //             d3.select('#dest_tt_2').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                    //         }
-                    //         if (i == 2) {
-                    //             d3.select('#dest_tt_3').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                    //         }
-                    //         if (i == 3) {
-                    //             d3.select('#dest_tt_4').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                    //         }
-                    //     }
-                    // }
-                    // return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
                 });
             });
         });
@@ -538,45 +407,6 @@ function texas() {
                             return "white";
                         }
                     })
-                    .on("mouseover", function(d){
-                        if (data.hasOwnProperty(curr_msa)) {
-                            return tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net population change, 2013-2017: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
-                        }
-                    })
-                    .on("mousemove", function(d){
-                        return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
-                    })
-                    .on("mouseout", function(d) {
-                        return tooltip.style("visibility", "hidden");
-                    })
-                    // .on("mouseout", function(d) {
-                    //     var curr_msa = d.properties.GEOID;
-                    //     d3.selectAll("line").remove();
-                    //     d3.select(this).style("fill", function (d) {
-                    //         if (data.hasOwnProperty(curr_msa)) {
-                    //             return "lightgray";
-                    //         } else {
-                    //             return "white";
-                    //         }
-                    //     });
-                    //     for (var i in conns[curr_msa]) {
-                    //         if (conns[curr_msa][i]["dest"] in coords) {
-                    //             // stroke around dests
-                    //             d3.selectAll('path').style("fill", function (e) {
-                    //                 if (data.hasOwnProperty(e.properties.GEOID)) {
-                    //                     return "lightgray";
-                    //                 } else {
-                    //                     return "white";
-                    //                 }
-                    //             });
-                    //         }
-                    //     }
-                    //     d3.select('#dest_tt_1').style("visibility", "hidden");
-                    //     d3.select('#dest_tt_2').style("visibility", "hidden");
-                    //     d3.select('#dest_tt_3').style("visibility", "hidden");
-                    //     d3.select('#dest_tt_4').style("visibility", "hidden");
-                    //     return tooltip.style("visibility", "hidden");
-                    // })
                     .style("stroke", function (d) {
                         return "white";
                     });
@@ -612,20 +442,6 @@ function texas() {
                         for (var i in conns[curr_msa]) {
                             var dest_msa = conns[curr_msa][i]["dest"];
                             if (dest_msa in coords) {
-                                // if (data.hasOwnProperty(dest_msa)) {
-                                //     if (i == 0) {
-                                //         d3.select('#dest_tt_1').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
-                                //     }
-                                //     if (i == 1) {
-                                //         d3.select('#dest_tt_2').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
-                                //     }
-                                //     if (i == 2) {
-                                //         d3.select('#dest_tt_3').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
-                                //     }
-                                //     if (i == 3) {
-                                //         d3.select('#dest_tt_4').style("visibility", "visible").html(data[dest_msa]["name"] + "<br> Number of migrants: " + conns[curr_msa][i]["value"] + "<br> RPI: " + data[dest_msa]["rpi"]);
-                                //     }
-                                // }
                                 if (e.properties.GEOID == dest_msa) {
                                     return "gray";
                                 }
@@ -637,29 +453,6 @@ function texas() {
                             return "white";
                         }
                     });
-                    
-                    // show tooltip
-                    // tooltip.style("visibility", "visible").html(data[curr_msa]["name"] + "<br> Net population change, 2013-2017: " + data[curr_msa]["net"] + "<br> RPI: " + data[curr_msa]["rpi"]);
-                    
-
-                    // for (var i in conns[curr_msa]) {
-                    //     var dest_msa = conns[curr_msa][i]["dest"];
-                    //     if (dest_msa in coords) {
-                    //         if (i == 0) {
-                    //             d3.select('#dest_tt_1').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                    //         }
-                    //         if (i == 1) {
-                    //             d3.select('#dest_tt_2').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                    //         }
-                    //         if (i == 2) {
-                    //             d3.select('#dest_tt_3').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                    //         }
-                    //         if (i == 3) {
-                    //             d3.select('#dest_tt_4').style("top", (cans[dest_msa][1]+d3.event.pageY-cans[curr_msa][1]-10)+"px").style("left",(cans[dest_msa][0]+410)+"px");
-                    //         }
-                    //     }
-                    // }
-                    // return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
                 });
             });
         });
