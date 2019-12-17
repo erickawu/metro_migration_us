@@ -177,7 +177,9 @@ hr {
 
 #currname {
   font-weight: bold;
-  font: 24px; /* why is this not working */
+  border-style: solid;
+  border-color: #3a403b;
+  border-width: 1px;
 }
 
 #nummoved {

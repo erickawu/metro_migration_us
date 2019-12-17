@@ -153,7 +153,7 @@ function map() {
 
                             // write selected msa info in legend
                             var curr_txt = '<p id="currname">' + data[curr_msa]["name"] + '</p>';
-                            curr_txt += '<p> Net pop. change, 2013-17: ';
+                            curr_txt += '<p> Net population change, 2013-17: ';
                             if (data[curr_msa]["net"] > 0) {
                                 curr_txt += '+';
                             }
@@ -192,16 +192,16 @@ function map() {
                                     else {
                                         color = "#9ACD32";
                                     }
-                                    var dst_txt = '<p style = "background-color: ' + color + ';"><l id="nummoved">';
+                                    var dst_txt = '<p style = "background-color: ' + color + ';">';
                                     if (conns[curr_msa][i]["value"] > 0) {
                                         dst_txt += '+';
                                     }
-                                    dst_txt += conns[curr_msa][i]["value"] + ': ';
+                                    dst_txt += conns[curr_msa][i]["value"] + ': <b>';
 
                                     if (dest_msa in data) {
-                                        dst_txt += data[dest_msa]["name"] + '</l>, RPI ' + data[dest_msa]["rpi"];
+                                        dst_txt += data[dest_msa]["name"] + '</b>, RPI ' + data[dest_msa]["rpi"];
                                     } else {
-                                        dst_txt += 'Unknown Metro Area';
+                                        dst_txt += 'Unknown Metro Area</b>';
                                     }
                                     dst_txt += '</p>';
                                     d3.select('#dst'+i).html(dst_txt); // css needed  
