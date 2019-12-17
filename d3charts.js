@@ -575,7 +575,9 @@ function handleStepEnter(response) {
     if (response.index == 0){
 		d3.select('.sticky1 svg').remove();
         scatterplot();
-	}  
+	} else {
+        d3.select('.tooltip-src').remove();
+    }  
     if (response.index == 1){
 		d3.select('.sticky1 svg').remove();
         map();
