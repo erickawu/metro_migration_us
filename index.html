@@ -43,10 +43,10 @@
 					<p>For each metropolitan area, the figure to the right plots the <b>relationship</b> between the <b>net population change ratio</b> (net number of individuals who migrated to or from the area divided by the total population) and <b>real personal income</b> (RPI, which is normalized in light of inflation), between 2013 and 2017. As you can probably perceive, there is <b>no clear relationship between the two.</b> However, we’ve identified <b>three outlier groups </b>, which are circled in <b>red!</b></p>
 				</div>
 				<div class='step' data-step='2'>
-					<br> <br> <br> <br> <br> <br> <br> <br>				
+					<br> <br> <br> <br>			
 					<p style = 'font-family: andale mono; font-size: 24px; font-weight: 600'> An Interactive </p>
 					<p id='legend'>
-						<b> Mouse over </b> any metropolitan area to view <b> inflow and outflow data </b> (Only the magnitudes of the top three flows are displayed).
+						<b> Mouse over </b> any metropolitan area to view <b> inflow and outflow data </b> (Only the magnitudes of the top four flows are displayed).
 						<p id='slcted'></p>
 						<p class='dst' id='dst0'></p>
 						<p class='dst' id='dst1'></p>
@@ -105,7 +105,7 @@ We used publicly available U.S. Census data that described the magnitude of indi
 
 <div>
 <b> DESIGN AND IMPLEMENTATION: </b>
-We had three main goals: to be able to effectively show our chosen outliers, to guide the reader through the migration narratives in these areas, and to depict the magnitude of individuals coming in and out of each metropolitan area. We constructed two interactive visualizations: a scatterplot with tooltips constructed in D3, with outlier groups circled in red. Our second interactive used D3 Topojson to show geospatial data. Upon mousing over a metropolitan area, one can view the top contributors to the area’s net population change, encoded as different colored and sized lines. If the line between two areas are red, individuals are leaving the area being moused over. If green, individuals are traveling to the area being moused over. The thickness of the line is proportional to the magnitude of individuals leaving or entering. We placed these two visualizations on a webpage and constructed our narrative around our visualizations using Scrollama, where we strung specific text blocks and visualizations together. </div> <br> <br>
+We had three main goals: to be able to effectively show our chosen outliers, to guide the reader through the migration narratives in these areas, and to depict the magnitude of individuals coming in and out of each metropolitan area. We constructed two interactive visualizations: a scatterplot with tooltips constructed in D3, with outlier groups circled in red. Our second interactive used D3 Topojson to show geospatial data. Upon mousing over a metropolitan area, the area itself is colored based on net population change. One can also view the top contributors to the area’s net population change, encoded as different colored and sized lines. If the line between two areas are red, individuals are leaving the area being moused over. If green, individuals are traveling to the area being moused over. The thickness of the line is proportional to the magnitude of individuals leaving or entering. We placed these two visualizations on a webpage and constructed our narrative around our visualizations using Scrollama, where we strung specific text blocks and visualizations together. </div> <br> <br>
 
 <div>
 <b> DISCUSSION: </b>
