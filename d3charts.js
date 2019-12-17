@@ -175,7 +175,6 @@ function map() {
                                     .attr("y2", cans[dest_msa][1])
                                     .attr("stroke-width", Math.abs(parseInt(conns[dest_msa][i]["value"]))/5000)
                                     .attr("stroke", function() {
-                                        // ERICKA: change legend text color based on this variable
                                         if (parseInt(conns[curr_msa][i]["value"]) < 0) {
                                             return "red";
                                         } else {
@@ -570,6 +569,7 @@ function handleResize() {
 // scrollama event handlers
 function handleStepEnter(response) {
     console.log(response)
+    d3.select('button').remove();
     // response = { element, direction, index }
 
     if (response.index == 0){
