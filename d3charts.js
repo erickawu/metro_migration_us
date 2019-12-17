@@ -183,20 +183,22 @@ function map() {
                                     });   
                                 }
 
-                                // write dest info in legend
-                                var dst_txt = '<p><l id="nummoved">';
-                                if (conns[curr_msa][i]["value"] > 0) {
-                                    dst_txt += '+';
-                                }
-                                dst_txt += conns[curr_msa][i]["value"] + ': ';
+                                if (dest_msa != "00999") {
+                                    // write dest info in legend
+                                    var dst_txt = '<p><l id="nummoved">';
+                                    if (conns[curr_msa][i]["value"] > 0) {
+                                        dst_txt += '+';
+                                    }
+                                    dst_txt += conns[curr_msa][i]["value"] + ': ';
 
-                                if (dest_msa in data) {
-                                    dst_txt += data[dest_msa]["name"] + '</l>, RPI ' + data[dest_msa]["rpi"];
-                                } else {
-                                    dst_txt += 'Unknown Metro Area';
+                                    if (dest_msa in data) {
+                                        dst_txt += data[dest_msa]["name"] + '</l>, RPI ' + data[dest_msa]["rpi"];
+                                    } else {
+                                        dst_txt += 'Unknown Metro Area';
+                                    }
+                                    dst_txt += '</p>';
+                                    d3.select('#dst'+i).html(dst_txt); // css needed  
                                 }
-                                dst_txt += '</p>';
-                                d3.select('#dst'+i).html(dst_txt); // css needed  
                             }
                         
                             // color dests gray
