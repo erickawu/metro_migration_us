@@ -304,8 +304,8 @@ function map() {
                         d3.selectAll(".dst1").html("");
                         d3.selectAll(".dst2").html("");
                         d3.selectAll(".dst3").html("");
-                        d3.select('#p1').html("<b> Mouse over </b> any metropolitan area to view <b> inflow and outflow data </b> (Only the magnitudes of the top four flows are displayed).");
-                        d3.selectAll('#p2').html("We’ve encoded the <b> three outlier groups </b> indicated in scatterplot into this map. We'll walk through them <b> one by one</b>.");
+                        d3.select('#p1').html("<b> Mouse over </b> any metropolitan area to view <b> inflow and outflow data </b> (Only the magnitudes of the top four flows are displayed). You can retain the lines by clicking, and clearing the map by unclicking.")
+                        d3.selectAll('#p2').html("We’ve encoded the <b> three outlier groups </b> indicated in scatterplot into this map. We'll walk through them <b> one by one</b>, but you can hover over now them to find out more about their respective areas, and the top three metro areas that people either migrate to or migrate from.");
                         d3.selectAll('#p3').html("The Villages (FL), Myrtle Beach (SC), and Greeley (CO) are <b> popular retirement destinations</b>, hence their <b> low RPI and high net migration ratios.</b> All three have a relatively <b> low cost of living,</b> are <b> suburban,</b> and are somewhat <b>close to a high-density metropolitan area.</b> For example, Greeley is in close proximity to Denver.");
                         d3.selectAll('#p4').html("As seen in the scatterplot above, Midland, Texas has the <b> highest RPI but a negative net migration. </b>\nMidland is part of the <b> Permian Basin,</b> a large oil-and-gas producing region in West Texas. As such, migration is heavily dependent on how the energy industry is doing. In light of Trumps’ presidency, the current oil boom has resulted in record-breaking levels of employment and population counts in Midland. The data we have captures the <b> 2015–16 energy slump </b>, in which the Permian Basin <b>rig count tumbled from 548 to a low of 137, </b> which explains the negative migration.");
                         for (curr_msa in clicked){
@@ -414,9 +414,6 @@ function outliers() {
       });
       // color curr msa by net
     }
-    d3.select(".sticky1").append("button").text("Clear").on("click", function() {
-        refresh();
-    });
 }
 
 function retire() {
@@ -636,7 +633,6 @@ var last = 0;
 function handleStepEnter(response) {
     console.log(last)
     console.log(response)
-    d3.select('button').remove();
     // response = { element, direction, index }
     if (response.index == 0){
 		    d3.select('.sticky1 svg').remove();
@@ -668,10 +664,17 @@ function handleStepEnter(response) {
 
     if (response.index == 5) {
         puerto();
+        if (last ==6){
+          d3.select('.sticky1').select("button").remove();
+        }
         last = 5
     }
     if (response.index == 6) {
         refresh();
+        d3.select(".sticky1").append("button").text("Clear").on("click", function() {
+            refresh();
+        });
+        last = 6;
     }
 
     // add color to current step only
