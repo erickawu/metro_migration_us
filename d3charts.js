@@ -161,7 +161,7 @@ function map() {
                             curr_txt += '<p> RPI: ' + data[curr_msa]["rpi"] + '<p>';
                             d3.select('#slcted').html(curr_txt); // css needed
                             d3.select('#slcted').append("hr");
-                            d3.select('#slcted').append("p").html('<p>Top 3 migration areas:</p>');
+                            d3.select('#slcted').append("p").html('<p>Top 4 migration areas:</p>');
                             
                             for (var i in conns[curr_msa]) {
                                 var dest_msa = conns[curr_msa][i]["dest"];
