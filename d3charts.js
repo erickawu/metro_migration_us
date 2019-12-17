@@ -119,7 +119,8 @@ function map() {
 
     var svg = d3.select(".sticky1").append("svg")
         .attr("width", 900)
-        .attr("height", 500);
+        .attr("height", 500)
+        .style("cursor", "pointer");
 
     let g = svg.append("g");
 
@@ -148,20 +149,24 @@ function map() {
                         
                         if (curr_msa in data) {
                             d3.select('#legend').text("");
-                            var curr_txt = '<p>' + data[curr_msa]["name"] + '</p>';
+
+                            // write selected msa info in legend
+                            var curr_txt = '<p id="currname">' + data[curr_msa]["name"] + '</p>';
                             curr_txt += '<p> Net pop. change, 2013-17: ';
                             if (data[curr_msa]["net"] > 0) {
                                 curr_txt += '+';
                             }
                             curr_txt += data[curr_msa]["net"] + '</p>';
                             curr_txt += '<p> RPI: ' + data[curr_msa]["rpi"] + '<p>';
-
                             d3.select('#slcted').html(curr_txt); // css needed
-                            // draw lines from source to dests
+                            d3.select('#slcted').append("hr");
+                            d3.select('#slcted').append("p").html('<p>Top 3 migration areas:</p>');
+                            
                             for (var i in conns[curr_msa]) {
                                 var dest_msa = conns[curr_msa][i]["dest"];
+
+                                // draw line from source to dest
                                 if (dest_msa in coords) {
-                                    // draw line
                                     svg.append("line")
                                     .attr("x1", cans[curr_msa][0])
                                     .attr("y1", cans[curr_msa][1])
@@ -169,31 +174,32 @@ function map() {
                                     .attr("y2", cans[dest_msa][1])
                                     .attr("stroke-width", Math.abs(parseInt(conns[dest_msa][i]["value"]))/5000)
                                     .attr("stroke", function() {
+                                        // ERICKA: change legend text color based on this variable
                                         if (parseInt(conns[curr_msa][i]["value"]) < 0) {
                                             return "red";
                                         } else {
                                             return "lightgreen";
                                         }
-                                    });
-                                    
-                                    var dst_txt = '<p>';
-                                    if (conns[curr_msa][i]["value"] > 0) {
-                                        dst_txt += '+';
-                                    }
-                                    dst_txt += conns[curr_msa][i]["value"] + ': ';
-
-                                    if (dest_msa in data) {
-                                        dst_txt += data[dest_msa]["name"] + ', RPI ' + data[dest_msa]["rpi"];
-                                    } else {
-                                        dst_txt += 'Unknown Metro Area';
-                                    }
-                                    dst_txt += '</p>';
-                                    d3.select('#dst'+i).html(dst_txt); // css needed   
-                            
+                                    });   
                                 }
+
+                                // write dest info in legend
+                                var dst_txt = '<p><l id="nummoved">';
+                                if (conns[curr_msa][i]["value"] > 0) {
+                                    dst_txt += '+';
+                                }
+                                dst_txt += conns[curr_msa][i]["value"] + ': ';
+
+                                if (dest_msa in data) {
+                                    dst_txt += data[dest_msa]["name"] + '</l>, RPI ' + data[dest_msa]["rpi"];
+                                } else {
+                                    dst_txt += 'Unknown Metro Area';
+                                }
+                                dst_txt += '</p>';
+                                d3.select('#dst'+i).html(dst_txt); // css needed  
                             }
                         
-                            // gray dests
+                            // color dests gray
                             d3.selectAll('path').style("fill", function (e) {
                                 for (var i in conns[curr_msa]) {
                                     var dest_msa = conns[curr_msa][i]["dest"];
@@ -209,6 +215,7 @@ function map() {
                                     return "white";
                                 }
                             });
+
                             // color curr msa by net
                             d3.select(this).style("fill", function (d) {
                                 if (data.hasOwnProperty(curr_msa) && data[curr_msa].hasOwnProperty("net")) {

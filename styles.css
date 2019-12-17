@@ -109,6 +109,10 @@ figure p {
   color: #fff;
 }
 
+hr {
+  border-color: #3a403b;
+}
+
 
 .step {
   margin: 0 0 2rem 2rem;
@@ -161,4 +165,13 @@ figure p {
   border: 1px solid black;
   border-radius: 3px;			
   pointer-events: none;			
+}
+
+#currname {
+  font-weight: bold;
+  font: 24px; /* why is this not working */
+}
+
+#nummoved {
+  font-weight: bold;
 }
