@@ -43,6 +43,14 @@ a:hover {
   text-align: center;
 }
 
+#outro {
+  max-width: 65rem;
+  margin: 1rem auto;
+  text-align: center;
+  line-height: 110%;
+}
+
+
 .intro__hed {
   font-size: 5em;
   margin: 2rem auto 1.2rem auto;
