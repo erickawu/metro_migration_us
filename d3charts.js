@@ -184,7 +184,14 @@ function map() {
                                 }
 
                                 // write dest info in legend
-                                var dst_txt = '<p><l id="nummoved">';
+                                var color = parseInt(conns[curr_msa][i]["value"]);
+                                if (color < 0) {
+                                    color = "#C55547";
+                                }
+                                else {
+                                    color = "#9ACD32";
+                                }
+                                var dst_txt = '<p style = "background-color: ' + color + ';"><l id="nummoved">';
                                 if (conns[curr_msa][i]["value"] > 0) {
                                     dst_txt += '+';
                                 }
