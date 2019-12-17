@@ -65,19 +65,20 @@ function scatterplot() {
           }))
           .call(g => g.append("circle")
               .filter(function(d) {return dict.includes(d.msa_num)})
-              .attr("fill", "none")
+              .attr("fill", "white")
               .attr("stroke", "red")
+              .attr("stroke-width", 2)
               .attr("r", 20)
-              .attr("opacity", "0.9")
+              .attr("opacity", "0.3")
               .on("mouseover", function(d) {
-            d3.select(this).style("fill", "red").style("opacity", "0.5");
+            d3.select(this).style("fill", "red").style("opacity", "0.6");
             return tooltip.style("visibility", "visible").text(d.origin);
           })
               .on("mousemove", function(){
             return tooltip.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+10)+"px");
           })
               .on("mouseout", function(d) {
-            d3.select(this).style("fill", "none").style("opacity", "0.5");
+            d3.select(this).style("fill", "none").style("opacity", "0.3");
             return tooltip.style("visibility", "hidden");
           }))
       });
@@ -100,7 +101,7 @@ function scatterplot() {
       .attr("transform", "translate(370," + 470 + ")")
       .style("text-anchor", "left")
       .style("font-size", "10px")
-      .style("fill", "white")
+      .style("fill", "black")
       .text("Real Personal Income ($)");
 
   svg.append("text")
@@ -108,7 +109,7 @@ function scatterplot() {
       .attr("transform", "translate(" + (55) + "," + (250) + ")rotate(-90)")
       .style("text-anchor", "middle")
       .style("font-size", "10px")
-      .style("fill", "white")
+      .style("fill", "black")
       .text("Ratio of Net Migrants over Population");
   //title
   svg.append("text")
@@ -116,7 +117,7 @@ function scatterplot() {
       .attr("transform", "translate(150," + 40 + ")")
       .style("text-anchor", "left")
       .style("font-size", "18px")
-      .style("fill", "white")
+      .style("fill", "black")
       .text("Relationship Between Net Migration Ratio and RPI")
   return svg.node();
 }
@@ -132,7 +133,8 @@ var outerconns;
 function map() {
     svg = d3.select(".sticky1").append("svg")
         .attr("width", 900)
-        .attr("height", 500);
+        .attr("height", 500)
+        .style("cursor", "pointer");
 
     pt = svg.node().getBoundingClientRect();
 
@@ -161,7 +163,7 @@ function map() {
                         if (outerdata.hasOwnProperty(d.properties.GEOID)) {
                             return "lightgray";
                         } else {
-                            return "blue";
+                            return "white";
                         }
                     })
                     .on("click", function(d){
@@ -177,15 +179,17 @@ function map() {
 
                         if (curr_msa in outerdata) {
                             d3.selectAll('.legend').text("");
-                            var curr_txt = '<p>' + outerdata[curr_msa]["name"] + '</p>';
-                            curr_txt += '<p> Net pop. change, 2013-17: ';
+                            var curr_txt = '<p id="currname">' + outerdata[curr_msa]["name"] + '</p>';
+                            curr_txt += '<p> Net population change, 2013-17: ';
                             if (outerdata[curr_msa]["net"] > 0) {
                                 curr_txt += '+';
                             }
                             curr_txt += outerdata[curr_msa]["net"] + '</p>';
                             curr_txt += '<p> RPI: ' + outerdata[curr_msa]["rpi"] + '<p>';
 
-                            d3.selectAll('.slcted').html(curr_txt); // css needed
+                            d3.selectAll('.slcted').html(curr_txt);
+                            d3.selectAll('.slcted').append("hr");
+                            d3.selectAll('.slcted').append("p").html('<p>Top migration areas:</p>');
                             // draw lines from source to dests
                             for (var i in outerconns[curr_msa]) {
                                 var dest_msa = outerconns[curr_msa][i]["dest"];
@@ -204,17 +208,27 @@ function map() {
                                             return "lightgreen";
                                         }
                                     });
+                                }
 
-                                    var dst_txt = '<p>';
+                                if (dest_msa != "00999") {
+                                    // write dest info in legend
+                                    var color = parseInt(conns[curr_msa][i]["value"]);
+                                    if (color < 0) {
+                                        color = "#C55547";
+                                    }
+                                    else {
+                                        color = "#9ACD32";
+                                    }
+                                    var dst_txt = '<p style = "background-color: ' + color + ';">';
                                     if (outerconns[curr_msa][i]["value"] > 0) {
                                         dst_txt += '+';
                                     }
-                                    dst_txt += outerconns[curr_msa][i]["value"] + ': ';
+                                    dst_txt += outerconns[curr_msa][i]["value"] + ': <b>';
 
                                     if (dest_msa in outerdata) {
-                                        dst_txt += outerdata[dest_msa]["name"] + ', RPI ' + outerdata[dest_msa]["rpi"];
+                                        dst_txt += outerdata[dest_msa]["name"] + '</b>, RPI ' + outerdata[dest_msa]["rpi"];
                                     } else {
-                                        dst_txt += 'Unknown Metro Area';
+                                        dst_txt += 'Unknown Metro Area</b>';
                                     }
                                     dst_txt += '</p>';
                                     d3.selectAll('.dst'+i).html(dst_txt); // css needed
@@ -248,15 +262,16 @@ function map() {
                                 if (outerdata.hasOwnProperty(e.properties.GEOID) && outerdata[curr_msa].hasOwnProperty("net")) {
                                     return "lightgray";
                                 } else {
-                                    return "blue";
+                                    return "white";
                                 }
                             });
+
                             // color curr msa by net
                             d3.select(this).style("fill", function (d) {
                                 if (outerdata.hasOwnProperty(curr_msa) && outerdata[curr_msa].hasOwnProperty("net")) {
                                     return d3.interpolateRdYlGn((outerdata[curr_msa]["net"] + 149227) / 298454);
                                 } else {
-                                    return "blue";
+                                    return "white";
                                 }
                             });
                         }
@@ -268,7 +283,7 @@ function map() {
                             if (outerdata.hasOwnProperty(curr_msa)) {
                                 return "lightgray";
                             } else {
-                                return "blue";
+                                return "white";
                             }
                         });
                         for (var i in outerconns[curr_msa]) {
@@ -278,17 +293,17 @@ function map() {
                                     if (outerdata.hasOwnProperty(e.properties.GEOID)) {
                                         return "lightgray";
                                     } else {
-                                        return "blue";
+                                        return "white";
                                     }
                                 });
                             }
                         }
 
                         d3.selectAll(".slcted").html("");
+                        d3.selectAll(".dst0").html("");
                         d3.selectAll(".dst1").html("");
                         d3.selectAll(".dst2").html("");
                         d3.selectAll(".dst3").html("");
-                        d3.selectAll(".dst4").html("");
                         d3.select('#p1').html("<b> Mouse over </b> any metropolitan area to view <b> inflow and outflow data </b> (Only the magnitudes of the top four flows are displayed).");
                         d3.selectAll('#p2').html("We’ve encoded the <b> three outlier groups </b> indicated in scatterplot into this map. We'll walk through them <b> one by one</b>.");
                         d3.selectAll('#p3').html("The Villages (FL), Myrtle Beach (SC), and Greeley (CO) are <b> popular retirement destinations</b>, hence their <b> low RPI and high net migration ratios.</b> All three have a relatively <b> low cost of living,</b> are <b> suburban,</b> and are somewhat <b>close to a high-density metropolitan area.</b> For example, Greeley is in close proximity to Denver.");
@@ -335,14 +350,14 @@ function map() {
                               if (outerdata.hasOwnProperty(e.properties.GEOID)) {
                                   return "lightgray";
                               } else {
-                                  return "blue";
+                                  return "white";
                               }
                           });
                           // color curr msa by net
                         }
                     })
                     .style("stroke", function (d) {
-                        return "blue";
+                        return "white";
                     });
                 });
             });
@@ -394,11 +409,14 @@ function outliers() {
           if (outerdata.hasOwnProperty(e.properties.GEOID)) {
               return "lightgray";
           } else {
-              return "blue";
+              return "white";
           }
       });
       // color curr msa by net
     }
+    d3.select(".sticky1").append("button").text("Clear").on("click", function() {
+        refresh();
+    });
 }
 
 function retire() {
@@ -447,7 +465,7 @@ function retire() {
         if (outerdata.hasOwnProperty(e.properties.GEOID)) {
             return "lightgray";
         } else {
-            return "blue";
+            return "white";
         }
     });
     // color curr msa by net
@@ -500,7 +518,7 @@ function texas() {
         if (outerdata.hasOwnProperty(e.properties.GEOID)) {
             return "lightgray";
         } else {
-            return "blue";
+            return "white";
         }
     });
     // color curr msa by net
@@ -540,7 +558,7 @@ function refresh(){
         if (outerdata.hasOwnProperty(e.properties.GEOID)) {
             return "lightgray";
         } else {
-            return "blue";
+            return "white";
         }
     });
     // color curr msa by net
@@ -562,7 +580,7 @@ function puerto() {
         if (outerdata.hasOwnProperty(e.properties.GEOID)) {
             return "lightgray";
         } else {
-            return "blue";
+            return "white";
         }
     });
     // color curr msa by net
@@ -618,12 +636,15 @@ var last = 0;
 function handleStepEnter(response) {
     console.log(last)
     console.log(response)
+    d3.select('button').remove();
     // response = { element, direction, index }
     if (response.index == 0){
 		    d3.select('.sticky1 svg').remove();
         scatterplot();
         last = 0
-	  }
+	  } else {
+          d3.select('.tooltip-src').remove();
+      }
     if (response.index == 1){
       if (last == 0){
         d3.select('.sticky1 svg').remove();
@@ -652,6 +673,7 @@ function handleStepEnter(response) {
     if (response.index == 6) {
         refresh();
     }
+
     // add color to current step only
     step.classed('is-active', function (d, i) {
         return i === response.index;
