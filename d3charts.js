@@ -579,26 +579,26 @@ function handleStepEnter(response) {
         d3.select('.tooltip-src').remove();
     }  
     if (response.index == 1){
-		d3.select('.sticky1 svg').remove();
-        map();
-    }
-    if (response.index == 2){
         d3.select('.sticky1 svg').remove();
         outliers();
     }
 
-    if (response.index == 3){
+    if (response.index == 2){
         d3.select('.sticky1 svg').remove();
         retire();
     }
     
-    if (response.index == 4) {
+    if (response.index == 3) {
         d3.select('.sticky1 svg').remove();
         texas();
     }
-    if (response.index == 5) {
+    if (response.index == 4) {
         d3.select('.sticky1 svg').remove();
         puerto();
+    }
+    if (response.index == 5){
+		d3.select('.sticky1 svg').remove();
+        map();
     }
     // add color to current step only
     step.classed('is-active', function (d, i) {
