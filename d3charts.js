@@ -263,6 +263,17 @@ function map() {
                     .style("stroke", function (d) {
                         return "white";
                     });
+
+                    d3.select(".sticky1").append("button").text("Clear").on("click", function() {
+                        d3.selectAll("line").remove();
+                        d3.selectAll('path').style("fill", function (e) {
+                            if (data.hasOwnProperty(e.properties.GEOID)) {
+                                return "lightgray";
+                            } else {
+                                return "white";
+                            }
+                        });
+                    });
                 });
             });
         });
