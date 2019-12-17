@@ -17,19 +17,19 @@
 		<section id='intro'>
 			<h1 class='intro__hed'>Intra-Metropolitan Migration in the United States</h1>
 			<p>
-				 Data Visualization, Fall 2019: 
+				 Data Visualization, Fall 2019:
 			</p>
 			<p class='intro__dek'>
-				Dorrie Tang <br> Ericka Wu <br> Richard Zhang 
+				Dorrie Tang <br> Ericka Wu <br> Richard Zhang
 			</p>
 			<p class = 'intro__text' style = 'font-style: italic; color: grey;'>
 				“In the United States, among the important forces in the convergence of per capita income levels ... has been the inter-regional migration of persons.” <br> -- UChicago study <br> on Migration and Inequality, 2003
 			</p>
 			<p class = 'intro__text' style = 'font-style: italic; color: grey; padding-bottom: 0.8rem'>
 				“Advanced and expanding regions are usually the receiving regions for internal migration.” <br> -- Gunner Mydral, 1950
-			</p>			
+			</p>
 			<p class='intro__text' style = 'padding-bottom: 2rem;'>
-				 In lieu of the notes above, we attempted to observe relationship between income and migration in metropolitan areas in the United States using migration and income data between 2013 and 2017 from the U.S. Census. Not seeing as large of an association as we expected, we decided to modify our objectives. 
+				 In lieu of the notes above, we attempted to observe relationship between income and migration in metropolitan areas in the United States using migration and income data between 2013 and 2017 from the U.S. Census. Not seeing as large of an association as we expected, we decided to modify our objectives.
 				 In addition to visualizing migration data, we wanted to explore reasons why specific metropolitan areas either diverged from or followed our hypothesis, highlighting interesting historical and economic events around outliers. <br> Scroll down to explore!
 			</p>
 		</section>
@@ -39,51 +39,71 @@
 			<article>
 				<div class='step' data-step='1'>
 					<br> <br> <br> <br> <br> <br> <br> <br>
-					<p style = 'font-family: andale mono; font-size: 24px; font-weight: 600;'> The Beginning </p>
-					<p>For each metropolitan area, the figure to the right plots the <b>relationship</b> between the <b>net population change ratio</b> (net number of individuals who migrated to or from the area divided by the total population) and <b>real personal income</b> (RPI, which is normalized in light of inflation), between 2013 and 2017. As you can probably perceive, there is <b>no clear relationship between the two.</b> However, we’ve identified <b>three outlier groups </b>, which are circled in <b>red!</b></p>
+					<p style = 'font-family: andale mono; font-size: 24px; font-weight: 600; color: white'> The Beginning </p>
+					<p style = 'color: white'>For each metropolitan area, the figure to the right plots the <b>relationship</b> between the <b>net population change ratio</b> (net number of individuals who migrated to or from the area divided by the total population) and <b>real personal income</b> (RPI, which is normalized in light of inflation), between 2013 and 2017. As you can probably perceive, there is <b>no clear relationship between the two.</b> However, we’ve identified <b>three outlier groups </b>, which are circled in <b>red!</b></p>
 				</div>
 				<div class='step' data-step='2'>
-					<br> <br> <br> <br> <br> <br> <br> <br>				
-					<p style = 'font-family: andale mono; font-size: 24px; font-weight: 600'> An Interactive </p>
-					<p id='legend'>
-						<b> Mouse over </b> any metropolitan area to view <b> inflow and outflow data </b> (Only the magnitudes of the top four flows are displayed).
-						<p id='slcted'></p>
-						<p class='dst' id='dst1'></p>
-						<p class='dst' id='dst2'></p>
-						<p class='dst' id='dst3'></p>
-						<p class='dst' id='dst4'></p>
-					</p>
+					<br> <br> <br> <br> <br> <br> <br> <br>
+					<p style = 'font-family: andale mono; font-size: 24px; font-weight: 600; color: white'> Map of USA's MSA's </p>
+					<p style = 'color: white'>Here is the map of all the Metropolitan Statistical Areas in the United States. We'll be using this map, so become familiar with it.</b></p>
 				</div>
 				<div class='step' data-step='3'>
-					<br> <br> <br> <br> <br> <br> <br> <br>				
+					<br> <br> <br> <br> <br> <br> <br> <br>
 					<p style = 'font-family: andale mono; font-size: 24px; font-weight: 600'> Outliers </p>
-					<p>
-						We’ve encoded the <b> three outlier groups </b> indicated in scatterplot into this map. We'll walk through them <b> one by one</b>. 
+					<p class = 'legend' id='p2'>
+						We’ve encoded the <b> three outlier groups </b> indicated in scatterplot into this map. We'll walk through them <b> one by one</b>.
+						<p class='slcted'></p>
+						<p class='dst1' id='dst1'></p>
+						<p class='dst2' id='dst2'></p>
+						<p class='dst3' id='dst3'></p>
+						<p class='dst4' id='dst4'></p>
 					</p>
 				</div>
 				<div class='step' data-step='4'>
-					<br> <br> <br> <br> <br> <br> <br> <br>				
+					<br> <br> <br> <br> <br> <br> <br> <br>
 					<p style = 'font-family: andale mono; font-size: 19px; font-weight: 600'> Where would you want to retire? </p>
-					<p>
-The Villages (FL), Myrtle Beach (SC), and Greeley (CO) are <b> popular retirement destinations</b>, hence their <b> low RPI and high net migration ratios.</b> All three have a relatively <b> low cost of living,</b> are <b> suburban,</b> and are somewhat <b>close to a high-density metropolitan area.</b> For example, Greeley is in close proximity to Denver. 
-					</p>					
-				</div>		
-				<div class='step' data-step='5'>
-					<br> <br> <br> <br> <br>			
-					<p style = 'font-family: andale mono; font-size: 20px; font-weight: 600'> Highest RPI: <br> Midland, Texas </p>
-					<p>
-As seen in the scatterplot above, Midland, Texas has the <b> highest RPI but a negative net migration. </b> 
-Midland is part of the <b> Permian Basin,</b> a large oil-and-gas producing region in West Texas. As such, migration is heavily dependent on how the energy industry is doing. In light of Trumps’ presidency, the current oil boom has resulted in record-breaking levels of employment and population counts in Midland. The data we have captures the <b> 2015–16 energy slump </b>, in which the Permian Basin <b>rig count tumbled from 548 to a low of 137, </b> which explains the negative migration.
+					<p class = 'legend' id='p3'>
+The Villages (FL), Myrtle Beach (SC), and Greeley (CO) are <b> popular retirement destinations</b>, hence their <b> low RPI and high net migration ratios.</b> All three have a relatively <b> low cost of living,</b> are <b> suburban,</b> and are somewhat <b>close to a high-density metropolitan area.</b> For example, Greeley is in close proximity to Denver.
+					<p class='slcted'></p>
+					<p class='dst1' id='dst1'></p>
+					<p class='dst2' id='dst2'></p>
+					<p class='dst3' id='dst3'></p>
+					<p class='dst4' id='dst4'></p>
 					</p>
-				</div>		
+				</div>
+				<div class='step' data-step='5'>
+					<br> <br> <br> <br> <br>
+					<p style = 'font-family: andale mono; font-size: 20px; font-weight: 600'> Highest RPI: <br> Midland, Texas </p>
+					<p class = 'legend' id='p4'>
+As seen in the scatterplot above, Midland, Texas has the <b> highest RPI but a negative net migration. </b>
+Midland is part of the <b> Permian Basin,</b> a large oil-and-gas producing region in West Texas. As such, migration is heavily dependent on how the energy industry is doing. In light of Trumps’ presidency, the current oil boom has resulted in record-breaking levels of employment and population counts in Midland. The data we have captures the <b> 2015–16 energy slump </b>, in which the Permian Basin <b>rig count tumbled from 548 to a low of 137, </b> which explains the negative migration.
+					<p class='slcted'></p>
+					<p class='dst1' id='dst1'></p>
+					<p class='dst2' id='dst2'></p>
+					<p class='dst3' id='dst3'></p>
+					<p class='dst4' id='dst4'></p>
+					</p>
+				</div>
 				<div class='step' data-step='6'>
 					<br> <br> <br> <br> <br> <br> <br>
 	<p style = 'font-family: andale mono; font-size: 18px; font-weight: 600'> Why are so many people moving out of Puerto Rico? </p>
 					<p>
 Puerto Rico’s metropolitan areas have the <b> largest population decline </b> of any metropolitan area in the United States. This is due to the fact that the island is <b> riddled with debt </b>(RPI of 15592), and often spends years <b>recovering from hurricanes </b> that cause irreparable damage. Most of Puerto Rico’s migrants <b> go to New York</b>, where there is a <b> Puerto Rican population of 1.1 million as of 2019.</b> People first began migrating from Puerto Rico to New York in 1950, and the <b> trend has continued since. </b>
-					</p>						
 					</p>
-				</div>										
+					</p>
+				</div>
+				<div class='step' data-step='7'>
+					<br> <br> <br> <br> <br> <br> <br> <br>
+					<p style = 'font-family: andale mono; font-size: 24px; font-weight: 600'> An Interactive </p>
+					<p class='legend' id='p1'>
+						<b> Mouse over </b> any metropolitan area to view <b> inflow and outflow data </b> (Only the magnitudes of the top four flows are displayed). You can retain the lines by clicking, and clearing the map by unclicking.
+						<p class='slcted'></p>
+						<p class='dst1' id='dst1'></p>
+						<p class='dst2' id='dst2'></p>
+						<p class='dst3' id='dst3'></p>
+						<p class='dst4' id='dst4'></p>
+					</p>
+				</div>
 			</article>
 
 			<figure class='sticky1'>
@@ -102,5 +122,6 @@ Puerto Rico’s metropolitan areas have the <b> largest population decline </b> 
 	<script src='scrollama.min.js'></script>
 	<script src='d3charts.js'></script>
 	<script src="https://d3js.org/topojson.v1.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </body>
 </html>
