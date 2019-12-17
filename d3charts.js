@@ -63,10 +63,11 @@ function scatterplot() {
               .filter(function(d) {return dict.includes(d.msa_num)})
               .attr("fill", "none")
               .attr("stroke", "red")
+              .attr("stroke-width", 2)
               .attr("r", 20)
               .attr("opacity", "0.5")
               .on("mouseover", function(d) {
-            d3.select(this).style("fill", "red").style("opacity", "0.5");
+            d3.select(this).style("fill", "red").style("opacity", "0.6");
             return tooltip.style("visibility", "visible").text(d.origin);
           })
               .on("mousemove", function(){
