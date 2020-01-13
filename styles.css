@@ -26,7 +26,7 @@ a {
 
 h1 {
   color: #77815d;
-  font-family: 'andale mono'; 
+  font-family: 'andale mono';
 }
 
 a,
@@ -146,33 +146,33 @@ hr {
   padding-bottom: 0rem;
 }
 
-.tooltip-src {	
-  position: absolute;	
-  font-weight: bolder;		
-  text-align: left;			
-  width: auto;					
-  height: auto;					
+.tooltip-src {
+  position: absolute;
+  font-weight: bolder;
+  text-align: left;
+  width: auto;
+  height: auto;
   padding: 5px;
-  color: black;				
-  font: 10px 'courier';		
-  background: none;	
+  color: black;
+  font: 10px 'courier';
+  background: none;
   border: 4px solid black;
-  border-radius: 3px;			
-  pointer-events: none;			
+  border-radius: 3px;
+  pointer-events: none;
 }
 
-.tooltip-dest {	
-  position: absolute;			
-  text-align: left;			
-  width: auto;					
-  height: auto;					
+.tooltip-dest {
+  position: absolute;
+  text-align: left;
+  width: auto;
+  height: auto;
   padding: 5px;
-  color: black;				
-  font: 10px 'courier';		
-  background: none;	
+  color: black;
+  font: 10px 'courier';
+  background: none;
   border: 1px solid black;
-  border-radius: 3px;			
-  pointer-events: none;			
+  border-radius: 3px;
+  pointer-events: none;
 }
 
 #currname {
